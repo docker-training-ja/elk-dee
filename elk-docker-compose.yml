@@ -6,7 +6,7 @@ services:
     command: elasticsearch -Enetwork.host=0.0.0.0 -Ediscovery.zen.ping.unicast.hosts=elasticsearch
     environment:
       ES_JAVA_OPTS: -Xms1g -Xmx1g
-    image: elasticsearch:5.2
+    image: dockertrainingja/elasticsearch:20170707
     ulimits:
       memlock: -1
       nofile:
@@ -25,7 +25,7 @@ services:
       interval: 30s
       retries: 3
   kibana:
-    image: kibana:5.2
+    image: dockertrainingja/kibana:20170707
     ports:
       - "5601:5601"
     environment:
@@ -40,7 +40,7 @@ services:
       retries: 3
   logstash:
     command: sh -c "logstash -e 'input { syslog  { type => syslog port => 10514   } gelf { } beats { port => 5044 } } output { stdout { codec => rubydebug } elasticsearch { hosts => [ \"elasticsearch\" ] } }'"
-    image: logstash:5.2-alpine
+    image: dockertrainingja/logstash:20170707
     ports:
       - "10514:10514/tcp"
       - "10514:10514/udp"
